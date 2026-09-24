@@ -12,6 +12,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"sort"
 	"strconv"
 	"strings"
 	"sync"
@@ -1138,6 +1139,9 @@ func changedSinceMaps(before, after map[string]string) []string {
 			out = append(out, path)
 		}
 	}
+	// Map iteration order is random; sort so the job's summary and API
+	// response list the same files in the same order on every run.
+	sort.Strings(out)
 	return out
 }
 
